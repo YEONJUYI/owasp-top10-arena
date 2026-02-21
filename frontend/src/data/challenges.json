@@ -1,0 +1,164 @@
+{
+  "challenges": [
+    {
+      "id": "a01-broken-access",
+      "category": "A01",
+      "title": "Broken Access Control - IDOR",
+      "difficulty": "easy",
+      "description": "사용자 ID를 조작하여 다른 사용자의 프로필 정보에 접근하세요. Admin 계정의 비밀 메시지를 찾으면 Flag를 획득할 수 있습니다.",
+      "points": 100,
+      "flagHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "hints": [
+        "URL의 user_id 파라미터를 확인해보세요",
+        "user_id=1은 admin 계정입니다"
+      ],
+      "container_url": "http://localhost:5000",
+      "icon": "🔓",
+      "tags": ["IDOR", "Access Control", "Parameter Tampering"]
+    },
+    {
+      "id": "a02-misconfiguration",
+      "category": "A02",
+      "title": "Security Misconfiguration",
+      "difficulty": "easy",
+      "description": "잘못 설정된 서버에서 민감한 정보를 찾아보세요.",
+      "points": 100,
+      "flagHash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "hints": [
+        "일반적인 백업 파일 이름을 시도해보세요",
+        ".git 폴더나 .env 파일을 확인해보세요"
+      ],
+      "container_url": "http://localhost:8002",
+      "icon": "⚙️",
+      "tags": ["Misconfiguration", "Information Disclosure"]
+    },
+    {
+      "id": "a03-supply-chain",
+      "category": "A03",
+      "title": "Supply Chain Failures",
+      "difficulty": "medium",
+      "description": "취약한 npm 패키지를 이용하여 시스템에 침투하세요.",
+      "points": 200,
+      "flagHash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "hints": [
+        "package.json의 의존성을 확인하세요",
+        "오래된 버전의 라이브러리가 있나요?"
+      ],
+      "container_url": "http://localhost:8003",
+      "icon": "📦",
+      "tags": ["Supply Chain", "Vulnerable Dependencies"]
+    },
+    {
+      "id": "a04-crypto-failures",
+      "category": "A04",
+      "title": "Cryptographic Failures",
+      "difficulty": "easy",
+      "description": "약한 암호화를 깨고 숨겨진 데이터를 복호화하세요.",
+      "points": 100,
+      "flagHash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "hints": [
+        "Base64는 암호화가 아닙니다",
+        "MD5는 안전하지 않습니다"
+      ],
+      "container_url": "http://localhost:8004",
+      "icon": "🔐",
+      "tags": ["Cryptography", "Weak Encryption", "Hash Cracking"]
+    },
+    {
+      "id": "a05-injection",
+      "category": "A05",
+      "title": "SQL Injection",
+      "difficulty": "medium",
+      "description": "로그인 폼의 SQL Injection 취약점을 이용하여 관리자로 로그인하세요.",
+      "points": 200,
+      "flagHash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+      "hints": [
+        "OR 1=1 구문을 시도해보세요",
+        "주석 처리를 이용하세요 (-- 또는 #)"
+      ],
+      "container_url": "http://localhost:8005",
+      "icon": "💉",
+      "tags": ["SQL Injection", "Authentication Bypass"]
+    },
+    {
+      "id": "a06-insecure-design",
+      "category": "A06",
+      "title": "Insecure Design - Logic Flaw",
+      "difficulty": "hard",
+      "description": "비즈니스 로직의 설계 결함을 찾아 악용하세요.",
+      "points": 300,
+      "flagHash": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+      "hints": [
+        "결제 프로세스의 흐름을 분석하세요",
+        "Race Condition이 발생할 수 있나요?"
+      ],
+      "container_url": "http://localhost:8006",
+      "icon": "🏗️",
+      "tags": ["Logic Flaw", "Race Condition", "Business Logic"]
+    },
+    {
+      "id": "a07-auth-failures",
+      "category": "A07",
+      "title": "Authentication Failures",
+      "difficulty": "easy",
+      "description": "약한 비밀번호 정책을 이용하여 계정에 접근하세요.",
+      "points": 100,
+      "flagHash": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "hints": [
+        "일반적인 비밀번호를 시도해보세요",
+        "Brute Force 공격을 고려하세요"
+      ],
+      "container_url": "http://localhost:8007",
+      "icon": "🔑",
+      "tags": ["Authentication", "Weak Password", "Brute Force"]
+    },
+    {
+      "id": "a08-integrity-failures",
+      "category": "A08",
+      "title": "Data Integrity Failures",
+      "difficulty": "medium",
+      "description": "서명되지 않은 쿠키를 조작하여 권한을 상승시키세요.",
+      "points": 200,
+      "flagHash": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae",
+      "hints": [
+        "쿠키의 내용을 확인하세요",
+        "Base64 디코딩 후 수정해보세요"
+      ],
+      "container_url": "http://localhost:8008",
+      "icon": "🔏",
+      "tags": ["Integrity", "Cookie Manipulation", "Insecure Deserialization"]
+    },
+    {
+      "id": "a09-logging-failures",
+      "category": "A09",
+      "title": "Logging & Monitoring Failures",
+      "difficulty": "easy",
+      "description": "로그가 남지 않는 취약점을 이용하여 공격 흔적을 숨기세요.",
+      "points": 100,
+      "flagHash": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "hints": [
+        "관리자 페이지가 로깅되지 않습니다",
+        "직접 URL에 접근해보세요"
+      ],
+      "container_url": "http://localhost:8009",
+      "icon": "📝",
+      "tags": ["Logging", "Monitoring", "Detection Bypass"]
+    },
+    {
+      "id": "a10-exception-handling",
+      "category": "A10",
+      "title": "Exception Handling Failures",
+      "difficulty": "medium",
+      "description": "에러 메시지에서 민감한 정보를 추출하세요.",
+      "points": 200,
+      "flagHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "hints": [
+        "잘못된 입력으로 에러를 발생시키세요",
+        "스택 트레이스에 힌트가 있습니다"
+      ],
+      "container_url": "http://localhost:8010",
+      "icon": "⚠️",
+      "tags": ["Exception Handling", "Error Messages", "Information Disclosure"]
+    }
+  ]
+}
