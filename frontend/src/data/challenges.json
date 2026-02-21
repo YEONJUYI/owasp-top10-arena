@@ -12,7 +12,7 @@
         "URL의 user_id 파라미터를 확인해보세요",
         "user_id=1은 admin 계정입니다"
       ],
-      "container_url": "https://owasp-arena-production.up.railway.app",
+      "container_url": "https://owasp-arena.onrender.com",
       "icon": "🔓",
       "tags": ["IDOR", "Access Control", "Parameter Tampering"]
     },
