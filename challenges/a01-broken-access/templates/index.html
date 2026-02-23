@@ -1,134 +1,157 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile System</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-        }
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 28px;
-        }
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-        .info-box {
-            background: #f8f9fa;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-        }
-        .info-box p {
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
-        .user-list {
-            background: #fff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .user-item {
-            padding: 10px;
-            margin-bottom: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .user-item:last-child {
-            margin-bottom: 0;
-        }
-        .btn {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background: #5568d3;
-        }
-        .hint {
-            background: #fff3cd;
-            border: 1px solid #ffc107;
-            padding: 15px;
-            border-radius: 5px;
-            color: #856404;
-            font-size: 13px;
-            margin-top: 20px;
-        }
-        .hint strong {
-            display: block;
-            margin-bottom: 5px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>User Profile System - A01 챌린지</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
+    nav {
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    nav .logo { color: #58a6ff; font-size: 1.2rem; font-weight: bold; }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+    .badge {
+      display: inline-block;
+      background: #1f2937;
+      border: 1px solid #58a6ff;
+      color: #58a6ff;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 2rem; color: #f0f6fc; margin-bottom: 14px; }
+
+    .container { max-width: 600px; margin: 0 auto; padding: 0 24px 60px; }
+
+    .goal-box {
+      background: #0d2149;
+      border: 1px solid #1f4a8a;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 28px;
+      font-size: 0.88rem;
+      line-height: 1.8;
+    }
+    .goal-box .title { color: #58a6ff; font-weight: bold; margin-bottom: 8px; }
+    .goal-box p { color: #8b949e; }
+    .goal-box strong { color: #f0f6fc; }
+
+    .user-list {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .user-list h2 {
+      padding: 16px 20px;
+      font-size: 0.9rem;
+      color: #f0f6fc;
+      border-bottom: 1px solid #30363d;
+    }
+    .user-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      border-bottom: 1px solid #21262d;
+    }
+    .user-item:last-child { border-bottom: none; }
+    .user-info { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; }
+    .user-icon { font-size: 1.1rem; }
+    .user-name { color: #f0f6fc; }
+    .user-you { color: #8b949e; font-size: 0.78rem; margin-left: 4px; }
+
+    .btn {
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+    }
+    .btn-blue { background: #1f4a8a; color: #58a6ff; border: 1px solid #1f4a8a; }
+    .btn-blue:hover { background: #2d5fa0; }
+    .btn-disabled {
+      background: #1c2128;
+      color: #484f58;
+      border: 1px solid #30363d;
+      cursor: not-allowed;
+    }
+
+    .hint-box {
+      background: #2d1e00;
+      border: 1px solid #d97706;
+      border-radius: 8px;
+      padding: 14px 20px;
+      font-size: 0.82rem;
+      color: #f59e0b;
+    }
+    .hint-box span { color: #d97706; font-weight: bold; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔓 User Profile System</h1>
-        <p class="subtitle">OWASP Top 10 - A01: Broken Access Control</p>
-        
-        <div class="info-box">
-            <p><strong>📌 목표:</strong></p>
-            <p>admin 계정의 비밀 메시지를 찾으세요!</p>
-            <p>현재 당신은 <strong>user1</strong>로 로그인되어 있습니다.</p>
-        </div>
 
-        <div class="user-list">
-            <h3 style="margin-bottom: 15px; color: #333;">등록된 사용자</h3>
-            <div class="user-item">
-                <span>👤 user1 (당신)</span>
-                <a href="/profile?user_id=2" class="btn">프로필 보기</a>
-            </div>
-            <div class="user-item">
-                <span>👤 user2</span>
-                <a href="/profile?user_id=3" class="btn">프로필 보기</a>
-            </div>
-            <div class="user-item">
-                <span>👑 admin (접근 불가)</span>
-                <button class="btn" disabled style="background: #ccc; cursor: not-allowed;">접근 거부</button>
-            </div>
-        </div>
+<nav>
+  <span class="logo">🔓 User Profile System</span>
+  <span style="color:#8b949e; font-size:0.8rem;">OWASP Top 10 - A01: Broken Access Control</span>
+</nav>
 
-        <div class="hint">
-            <strong>💡 힌트:</strong>
-            URL의 파라미터를 주의깊게 살펴보세요...
-        </div>
+<div class="hero">
+  <div class="badge">A01 · Broken Access Control</div>
+  <h1>사용자 프로필 시스템</h1>
+</div>
+
+<div class="container">
+  <div class="goal-box">
+    <div class="title">🚩 목표:</div>
+    <p>admin 계정의 비밀 메시지를 찾으세요!<br/>
+    현재 당신은 <strong>user1</strong>로 로그인되어 있습니다.</p>
+  </div>
+
+  <div class="user-list">
+    <h2>등록된 사용자</h2>
+    <div class="user-item">
+      <div class="user-info">
+        <span class="user-icon">👤</span>
+        <span class="user-name">user1</span>
+        <span class="user-you">(당신)</span>
+      </div>
+      <a href="/profile?user_id=2" class="btn btn-blue">프로필 보기</a>
     </div>
+    <div class="user-item">
+      <div class="user-info">
+        <span class="user-icon">👤</span>
+        <span class="user-name">user2</span>
+      </div>
+      <a href="/profile?user_id=3" class="btn btn-blue">프로필 보기</a>
+    </div>
+    <div class="user-item">
+      <div class="user-info">
+        <span class="user-icon">👑</span>
+        <span class="user-name">admin</span>
+      </div>
+      <button class="btn btn-disabled">접근 거부</button>
+    </div>
+  </div>
+
+  <div class="hint-box">
+    <span>💡 힌트:</span> URL의 파라미터를 주의깊게 살펴보세요...
+  </div>
+</div>
+
 </body>
 </html>
