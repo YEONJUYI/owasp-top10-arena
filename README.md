@@ -32,7 +32,7 @@ OWASP Top 10 2025 기반 웹 보안 워게임 플랫폼
 
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/qu1cks1lv37/owasp-top10-arena.git
+git clone https://github.com/YEONJUYI/owasp-top10-arena.git
 cd owasp-top10-arena
 
 # 2. 전체 챌린지 실행
