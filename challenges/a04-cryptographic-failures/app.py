@@ -33,6 +33,8 @@ def login():
 
         if username in USERS and USERS[username] == md5(password):
             session['user'] = username
+            if username == 'admin':
+                return redirect(url_for('admin'))
             return redirect(url_for('dashboard'))
 
         return render_template('login.html', error='아이디 또는 비밀번호가 틀렸습니다.')
