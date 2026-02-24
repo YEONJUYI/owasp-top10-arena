@@ -6,38 +6,188 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+
     nav {
       background:#161b22; padding:16px 32px;
       display:flex; justify-content:space-between; align-items:center;
       border-bottom:1px solid #30363d;
     }
     nav .logo { color:#f85149; font-size:1rem; font-weight:bold; }
-    .container { max-width:750px; margin:60px auto; padding:0 24px; }
-    .error-box {
-      background:#3d1f1f; border:1px solid #f85149;
-      border-radius:10px; padding:32px; text-align:center; margin-bottom:24px;
+    nav a { color:#8b949e; text-decoration:none; font-size:0.8rem; }
+    nav a:hover { color:#f85149; }
+
+    .hero { text-align:center; padding:48px 20px 32px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #ec4899; color:#ec4899;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.72rem; margin-bottom:16px;
     }
-    .error-box h2 { color:#f85149; margin-bottom:12px; }
-    .error-box p { color:#8b949e; font-size:0.85rem; line-height:1.7; }
-    .error-box code {
-      background:#0d1117; padding:2px 6px;
-      border-radius:4px; color:#ec4899; font-size:0.82rem;
+    .hero h1 { font-size:1.5rem; color:#f0f6fc; margin-bottom:8px; }
+    .hero p { color:#8b949e; font-size:0.82rem; }
+
+    .container { max-width:700px; margin:0 auto; padding:0 24px 60px; }
+
+    /* 에러 박스 */
+    .error-box {
+      background:#2d1515; border:1px solid #f85149;
+      border-radius:10px; padding:24px;
+      margin-bottom:24px;
+    }
+    .error-box h2 { color:#f85149; font-size:1rem; margin-bottom:12px; }
+    .error-box p { color:#8b949e; font-size:0.83rem; line-height:1.7; }
+
+    /* 공격 방법 카드 */
+    .flow-card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; overflow:hidden; margin-bottom:20px;
+    }
+    .flow-header {
+      padding:14px 20px; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#f0f6fc; font-weight:bold;
+    }
+    .flow-body { padding:20px; }
+    .flow-step {
+      display:flex; align-items:flex-start; gap:14px;
+      padding:10px 0; border-bottom:1px solid #21262d; font-size:0.82rem;
+    }
+    .flow-step:last-child { border-bottom:none; }
+    .step-num {
+      background:#1f2937; color:#ec4899;
+      border:1px solid #9d174d; border-radius:4px;
+      padding:2px 8px; font-size:0.75rem; white-space:nowrap; flex-shrink:0;
+    }
+    .step-text { color:#8b949e; line-height:1.6; }
+    .step-text code {
+      background:#010409; color:#f9a8d4;
+      padding:1px 6px; border-radius:4px; font-size:0.78rem;
+      word-break:break-all;
+    }
+    .step-text b { color:#f0f6fc; }
+
+    /* 취약점/대응방안 */
+    .info-card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; overflow:hidden;
+    }
+    .info-header {
+      padding:14px 20px; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#f0f6fc; font-weight:bold;
+    }
+    .info-row {
+      display:flex; align-items:flex-start; gap:12px;
+      padding:12px 20px; border-bottom:1px solid #21262d; font-size:0.82rem;
+    }
+    .info-row:last-child { border-bottom:none; }
+    .tag-vuln {
+      background:#2d1515; color:#f85149;
+      border:1px solid #f8514933; border-radius:4px;
+      padding:2px 8px; font-size:0.72rem; white-space:nowrap; flex-shrink:0;
+    }
+    .tag-fix {
+      background:#0f2a1a; color:#3fb950;
+      border:1px solid #23863633; border-radius:4px;
+      padding:2px 8px; font-size:0.72rem; white-space:nowrap; flex-shrink:0;
+    }
+    .info-text { color:#8b949e; line-height:1.6; }
+    .info-text code {
+      background:#0d1117; color:#79c0ff;
+      padding:1px 5px; border-radius:3px; font-size:0.78rem;
     }
   </style>
 </head>
 <body>
+
 <nav>
   <span class="logo">⚠️ 관리자 페이지</span>
+  <a href="/">← 홈</a>
 </nav>
-<div class="container">
-  <div class="error-box">
-    <h2>🚫 접근 거부</h2>
-    <p>{{ error }}</p>
-    <br/>
-    <p>이 엔드포인트는 브라우저 직접 접근이 허용되지 않습니다.<br/>
-    <code>curl</code> 또는 <code>Burp Suite</code> 를 통해 접근하세요.<br/>
-    <code>Authorization: Bearer &lt;token&gt;</code> 헤더를 사용하세요.</p>
-  </div>
+
+<div class="hero">
+  <div class="badge">A07 · Authentication Failures</div>
+  <h1>접근 거부</h1>
+  <p>브라우저 직접 접근은 허용되지 않습니다.</p>
 </div>
+
+<div class="container">
+
+  <div class="error-box">
+    <h2>🚫 {{ error }}</h2>
+    <p>
+      이 엔드포인트는 <b>curl</b> 또는 <b>Burp Suite</b> 를 통해서만 접근 가능합니다.<br>
+      <code>Authorization: Bearer &lt;변조된_JWT&gt;</code> 헤더를 포함해야 합니다.
+    </p>
+  </div>
+
+  <!-- 공격 흐름 -->
+  <div class="flow-card">
+    <div class="flow-header">🔧 공격 방법 (JWT alg:none)</div>
+    <div class="flow-body">
+      <div class="flow-step">
+        <span class="step-num">STEP 1</span>
+        <div class="step-text">
+          <b>JWT 토큰 획득</b><br>
+          <code>user1 / password123</code> 로그인 → 대시보드 쿠키에서 토큰 확인
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="step-num">STEP 2</span>
+        <div class="step-text">
+          <b>Header 변조</b><br>
+          <code>{"alg":"HS256","typ":"JWT"}</code> → <code>{"alg":"none","typ":"JWT"}</code><br>
+          Base64URL 인코딩: <code>eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0</code>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="step-num">STEP 3</span>
+        <div class="step-text">
+          <b>Payload 변조</b><br>
+          <code>{"user":"user1","role":"user"}</code> → <code>{"user":"admin","role":"admin"}</code><br>
+          Base64URL 인코딩 후 교체
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="step-num">STEP 4</span>
+        <div class="step-text">
+          <b>서명 제거 후 curl 요청</b><br>
+          <code>curl -X GET http://localhost:5006/admin \</code><br>
+          <code>&nbsp;&nbsp;-H "Authorization: Bearer &lt;header&gt;.&lt;payload&gt;."</code><br>
+          서명 부분은 빈 문자열 (마지막 <code>.</code> 뒤에 아무것도 없음)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 취약점/대응방안 -->
+  <div class="info-card">
+    <div class="info-header">📋 취약점 분석 및 대응방안</div>
+    <div class="info-row">
+      <span class="tag-vuln">취약점</span>
+      <div class="info-text"><code>alg:none</code> 허용 시 서명 검증을 완전히 우회할 수 있습니다.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-vuln">취약점</span>
+      <div class="info-text">서버가 클라이언트가 제공한 <code>alg</code> 값을 그대로 신뢰합니다.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-vuln">취약점</span>
+      <div class="info-text">서명 검증 없이 <code>payload</code>의 <code>role</code> 을 그대로 신뢰합니다.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-fix">대응방안</span>
+      <div class="info-text">허용할 알고리즘을 서버 측에서 화이트리스트로 고정하고 <code>none</code> 을 반드시 차단하세요.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-fix">대응방안</span>
+      <div class="info-text"><code>PyJWT</code>, <code>python-jose</code> 등 검증된 라이브러리를 사용해 서명을 반드시 검증하세요.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-fix">대응방안</span>
+      <div class="info-text">민감한 권한 정보(<code>role</code>)는 토큰 payload가 아닌 서버 DB에서 조회하세요.</div>
+    </div>
+  </div>
+
+</div>
+
 </body>
 </html>

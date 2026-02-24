@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  a01-broken-access:
-    build: ./challenges/a01-broken-access
-    container_name: a01-broken-access
+  a01-broken-access-control:
+    build: ./challenges/a01-broken-access-control
+    container_name: a01-broken-access-control
     ports:
       - "5000:5000"
     restart: unless-stopped

@@ -1,86 +1,105 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - TechCorp</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            text-align: center;
-        }
-        .content {
-            padding: 40px;
-        }
-        .section {
-            margin-bottom: 30px;
-        }
-        .section h2 {
-            color: #333;
-            margin-bottom: 15px;
-        }
-        .section p {
-            color: #555;
-            line-height: 1.8;
-            margin-bottom: 10px;
-        }
-        .btn {
-            background: #667eea;
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 20px;
-        }
-        .btn:hover {
-            background: #5568d3;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>소개 - SecureShop</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
+    nav {
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    nav .logo { color: #f59e0b; font-size: 1.2rem; font-weight: bold; }
+    nav .nav-links a {
+      color: #8b949e;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 0.85rem;
+    }
+    nav .nav-links a:hover { color: #f59e0b; }
+
+    .hero {
+      text-align: center;
+      padding: 56px 20px 36px;
+    }
+    .hero h1 { font-size: 1.6rem; color: #f0f6fc; margin-bottom: 10px; }
+    .hero p { color: #8b949e; font-size: 0.83rem; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px 60px; }
+
+    .section {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .section h2 { color: #f0f6fc; font-size: 0.95rem; margin-bottom: 12px; }
+    .section p { color: #8b949e; font-size: 0.83rem; line-height: 1.8; }
+
+    /* 소스코드 주석에 힌트 숨김 */
+    /* 실제 페이지에는 렌더링되지 않음 */
+
+    .back {
+      display: inline-block;
+      margin-top: 8px;
+      color: #f59e0b;
+      text-decoration: none;
+      font-size: 0.83rem;
+    }
+    .back:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>회사 소개</h1>
-        </div>
 
-        <div class="content">
-            <div class="section">
-                <h2>우리의 비전</h2>
-                <p>TechCorp Solutions는 최고의 기술 솔루션을 제공합니다.</p>
-                <p>우리는 보안을 최우선으로 생각합니다... 정말로요? 🤔</p>
-            </div>
+<!-- 개발자 메모: /config 에서 서버 설정 확인 가능, admin 기본 비번 변경 전 배포 금지!! -->
 
-            <div class="section">
-                <h2>우리의 가치</h2>
-                <p>혁신, 신뢰, 그리고... 보안 설정을 제대로 하지 않는 것?</p>
-            </div>
+<nav>
+  <span class="logo">🛡️ SecureShop</span>
+  <div class="nav-links">
+    <a href="/">홈</a>
+    <a href="/about">소개</a>
+  </div>
+</nav>
 
-            <a href="/" class="btn">← 홈으로</a>
-        </div>
-    </div>
+<div class="hero">
+  <h1>회사 소개</h1>
+  <p>TechCorp Solutions · SecureShop 개발팀</p>
+</div>
+
+<div class="container">
+  <div class="section">
+    <h2>🏢 우리의 비전</h2>
+    <p>
+      TechCorp Solutions는 최고의 기술 솔루션을 제공합니다.<br>
+      우리는 보안을 최우선으로 생각합니다... 정말로요? 🤔
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>⚡ 우리의 가치</h2>
+    <p>
+      혁신, 신뢰, 그리고...<br>
+      배포 전에 보안 설정을 제대로 점검하는 것.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>📋 팀 소개</h2>
+    <p>
+      우리 팀은 보안을 매우 중요하게 생각합니다.<br>
+      서버 설정 파일도 철저히 관리하고 있습니다. 분명히요.
+    </p>
+  </div>
+
+  <a href="/" class="back">← 홈으로</a>
+</div>
+
 </body>
 </html>

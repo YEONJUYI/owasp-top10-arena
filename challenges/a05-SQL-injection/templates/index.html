@@ -2,81 +2,132 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8"/>
-  <title>LoginBank - A05 챌린지</title>
+  <title>HackShop - A05 챌린지</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+
     nav {
       background:#161b22; padding:16px 32px;
       display:flex; justify-content:space-between; align-items:center;
       border-bottom:1px solid #30363d;
     }
-    nav .logo { color:#58a6ff; font-size:1.2rem; font-weight:bold; }
-    nav a { color:#8b949e; text-decoration:none; margin-left:24px; font-size:0.9rem; }
-    nav a:hover { color:#58a6ff; }
-    .hero { text-align:center; padding:80px 20px; }
+    nav .logo { color:#ef4444; font-size:1.2rem; font-weight:bold; }
+    nav .nav-links a {
+      color:#8b949e; text-decoration:none;
+      margin-left:24px; font-size:0.85rem;
+    }
+    nav .nav-links a:hover { color:#ef4444; }
+
+    .hero { text-align:center; padding:72px 20px 40px; }
     .badge {
       display:inline-block; background:#1f2937;
-      border:1px solid #58a6ff; color:#58a6ff;
+      border:1px solid #ef4444; color:#ef4444;
       padding:4px 12px; border-radius:9999px;
-      font-size:0.75rem; margin-bottom:20px;
+      font-size:0.72rem; margin-bottom:20px;
     }
-    .hero h1 { font-size:2.2rem; color:#f0f6fc; margin-bottom:14px; }
-    .hero p { color:#8b949e; font-size:0.95rem; max-width:480px; margin:0 auto 32px; line-height:1.7; }
-    .btn {
-      display:inline-block; background:#58a6ff; color:#0d1117;
-      padding:12px 28px; border-radius:6px; text-decoration:none;
-      font-weight:bold; font-size:0.9rem; transition:background 0.2s;
+    .hero h1 { font-size:2rem; color:#f0f6fc; margin-bottom:12px; }
+    .hero p { color:#8b949e; font-size:0.88rem; max-width:480px; margin:0 auto 28px; line-height:1.8; }
+
+    .search-wrap {
+      display:flex; justify-content:center; margin-bottom:16px;
     }
-    .btn:hover { background:#79b8ff; }
-    .features {
-      display:flex; justify-content:center; gap:20px;
-      flex-wrap:wrap; padding:0 32px 60px;
-    }
-    .feature {
+    .search-wrap form { display:flex; gap:8px; width:100%; max-width:480px; }
+    .search-wrap input {
+      flex:1; padding:10px 16px;
       background:#161b22; border:1px solid #30363d;
-      border-radius:8px; padding:24px; width:200px; text-align:center;
+      border-radius:6px; color:#f0f6fc;
+      font-family:'Courier New',monospace; font-size:0.88rem; outline:none;
     }
-    .feature .icon { font-size:2rem; margin-bottom:12px; }
-    .feature h3 { font-size:0.95rem; color:#f0f6fc; margin-bottom:8px; }
-    .feature p { font-size:0.8rem; color:#8b949e; }
+    .search-wrap input:focus { border-color:#ef4444; }
+    .search-wrap button {
+      padding:10px 20px; background:#dc2626;
+      border:none; border-radius:6px; color:#f0f6fc;
+      font-family:'Courier New',monospace; font-weight:bold;
+      font-size:0.88rem; cursor:pointer; transition:background 0.2s;
+    }
+    .search-wrap button:hover { background:#ef4444; }
+
+    .container { max-width:700px; margin:0 auto; padding:0 24px 60px; }
+
+    /* 미션 박스 */
+    .mission-box {
+      background:#1a0505;
+      border:1px solid #dc2626;
+      border-radius:8px;
+      padding:18px 24px;
+      margin:28px 0;
+      font-size:0.83rem;
+      line-height:1.9;
+    }
+    .mission-box b { color:#fca5a5; }
+    .mission-box code {
+      background:#0d1117; color:#fca5a5;
+      padding:1px 6px; border-radius:4px; font-size:0.8rem;
+    }
+
+    /* 상품 카드 */
+    .products {
+      display:flex; flex-wrap:wrap; justify-content:center;
+      gap:16px;
+    }
+    .product-card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; padding:20px; width:195px;
+    }
+    .product-card .icon { font-size:1.8rem; margin-bottom:10px; }
+    .product-card h3 { color:#f0f6fc; font-size:0.88rem; margin-bottom:6px; }
+    .product-card .price { color:#ef4444; font-size:0.85rem; margin-bottom:6px; }
+    .product-card .desc { color:#8b949e; font-size:0.76rem; line-height:1.5; }
+
     footer {
-      text-align:center; padding:20px; color:#484f58;
-      font-size:0.75rem; border-top:1px solid #21262d;
+      text-align:center; padding:24px; color:#484f58;
+      font-size:0.72rem; border-top:1px solid #21262d;
     }
   </style>
 </head>
 <body>
+
 <nav>
-  <span class="logo">🏦 LoginBank</span>
-  <div>
+  <span class="logo">🛍️ HackShop</span>
+  <div class="nav-links">
     <a href="/">홈</a>
-    <a href="/login">로그인</a>
+    <a href="/search">검색</a>
   </div>
 </nav>
+
 <div class="hero">
   <div class="badge">A05 · Injection</div>
-  <h1>LoginBank</h1>
-  <p>안전한 금융 서비스입니다.<br/>관리자 계정에 로그인할 수 있을까요?</p>
-  <a href="/login" class="btn">로그인하기 →</a>
-</div>
-<div class="features">
-  <div class="feature">
-    <div class="icon">🔒</div>
-    <h3>보안</h3>
-    <p>철저한 로그인 검증 시스템</p>
-  </div>
-  <div class="feature">
-    <div class="icon">💰</div>
-    <h3>안전</h3>
-    <p>금융 데이터 완벽 보호</p>
-  </div>
-  <div class="feature">
-    <div class="icon">⚡</div>
-    <h3>빠름</h3>
-    <p>실시간 거래 처리</p>
+  <h1>HackShop</h1>
+  <p>최신 IT 기기를 최저가로 만나보세요.<br/>상품 검색 기능을 이용해보세요.</p>
+  <div class="search-wrap">
+    <form action="/search" method="GET">
+      <input type="text" name="q" placeholder="상품 검색..."/>
+      <button type="submit">검색 🔍</button>
+    </form>
   </div>
 </div>
-<footer>LoginBank v1.0.0 · SQL 인젝션에 취약한 뱅킹 서비스</footer>
+
+<div class="container">
+  <div class="mission-box">
+    🎯 <b>미션:</b> SQL Injection으로 숨겨진 <code>secrets</code> 테이블에서 플래그를 탈취하라.<br>
+    💡 검색창의 입력값이 SQL 쿼리에 그대로 삽입된다.<br>
+    🔧 <b>UNION SELECT</b> 구문으로 다른 테이블 데이터를 검색 결과에 합쳐보자.
+  </div>
+
+  <div class="products">
+    {% set icons = ['💻', '🖱️', '⌨️', '🖥️', '📷'] %}
+    {% for p in products %}
+    <div class="product-card">
+      <div class="icon">{{ icons[loop.index0 % icons|length] }}</div>
+      <h3>{{ p[1] }}</h3>
+      <div class="price">₩{{ "{:,}".format(p[2]) }}</div>
+      <div class="desc">{{ p[3] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<footer>HackShop v1.0.0 · SQL Injection에 취약한 쇼핑몰</footer>
 </body>
 </html>

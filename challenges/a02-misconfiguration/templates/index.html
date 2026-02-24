@@ -15,17 +15,19 @@
       align-items: center;
       border-bottom: 1px solid #30363d;
     }
-    nav .logo { color: #58a6ff; font-size: 1.2rem; font-weight: bold; }
-    nav a { color: #8b949e; text-decoration: none; margin-left: 24px; font-size: 0.9rem; }
-    nav a:hover { color: #58a6ff; }
+    nav .logo { color: #f59e0b; font-size: 1.2rem; font-weight: bold; }
+    nav .nav-links a {
+      color: #8b949e;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 0.85rem;
+    }
+    nav .nav-links a:hover { color: #f59e0b; }
 
     .hero {
       text-align: center;
-      padding: 80px 20px;
+      padding: 80px 20px 48px;
     }
-    .hero h1 { font-size: 2.5rem; color: #f0f6fc; margin-bottom: 16px; }
-    .hero p { color: #8b949e; font-size: 1rem; max-width: 500px; margin: 0 auto 32px; line-height: 1.6; }
-
     .badge {
       display: inline-block;
       background: #1f2937;
@@ -33,34 +35,61 @@
       color: #f59e0b;
       padding: 4px 12px;
       border-radius: 9999px;
-      font-size: 0.75rem;
-      margin-bottom: 24px;
+      font-size: 0.72rem;
+      margin-bottom: 20px;
     }
+    .hero h1 { font-size: 2rem; color: #f0f6fc; margin-bottom: 12px; }
+    .hero p { color: #8b949e; font-size: 0.88rem; line-height: 1.8; max-width: 480px; margin: 0 auto 32px; }
 
     .cards {
       display: flex;
       justify-content: center;
       gap: 20px;
       flex-wrap: wrap;
-      padding: 0 32px 60px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 60px;
     }
     .card {
       background: #161b22;
       border: 1px solid #30363d;
       border-radius: 8px;
-      padding: 24px;
+      padding: 24px 20px;
       width: 200px;
       text-align: center;
     }
-    .card .icon { font-size: 2rem; margin-bottom: 12px; }
-    .card h3 { font-size: 0.95rem; color: #f0f6fc; margin-bottom: 8px; }
-    .card p { font-size: 0.8rem; color: #8b949e; }
+    .card .icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .card h3 { font-size: 0.88rem; color: #f0f6fc; margin-bottom: 8px; }
+    .card p { font-size: 0.78rem; color: #8b949e; line-height: 1.6; }
+
+    .mission-box {
+      max-width: 640px;
+      margin: 0 auto 40px;
+      padding: 0 24px;
+    }
+    .mission-inner {
+      background: #1a1200;
+      border: 1px solid #d97706;
+      border-radius: 8px;
+      padding: 18px 24px;
+      font-size: 0.83rem;
+      color: #f59e0b;
+      line-height: 1.9;
+    }
+    .mission-inner b { color: #fbbf24; }
+    .mission-inner code {
+      background: #0d1117;
+      color: #fbbf24;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
 
     footer {
       text-align: center;
       padding: 20px;
       color: #484f58;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       border-top: 1px solid #21262d;
     }
   </style>
@@ -69,39 +98,46 @@
 
 <nav>
   <span class="logo">🛡️ SecureShop</span>
-  <div>
+  <div class="nav-links">
     <a href="/">홈</a>
     <a href="/about">소개</a>
-    <!-- TODO: 배포 전에 지울 것 - /admin 관리자 페이지 테스트 필요 -->
+    <!-- TODO: 배포 전 삭제 - 관리자 페이지 경로 /admin 테스트 아직 안 끝남 -->
   </div>
 </nav>
 
 <div class="hero">
   <div class="badge">A02 · Security Misconfiguration</div>
   <h1>SecureShop에 오신 것을 환영합니다</h1>
-  <p>완벽하게 안전한 쇼핑몰입니다.<br/>볼 것 없어요. 그냥 지나가세요.</p>
+  <p>완벽하게 안전한 쇼핑몰입니다.<br/>아무것도 숨겨진 게 없어요. 그냥 지나가세요.</p>
+</div>
+
+<div class="mission-box">
+  <div class="mission-inner">
+    🎯 <b>미션:</b> 서버 보안 설정 실수를 찾아 admin 패널에 접근하고 플래그를 획득하라.<br>
+    💡 웹서버가 무심코 노출하는 <code>robots.txt</code> 같은 파일을 확인해보자.
+  </div>
 </div>
 
 <div class="cards">
   <div class="card">
     <div class="icon">🔒</div>
     <h3>안전함</h3>
-    <p>엔터프라이즈급 보안... 아마도요.</p>
+    <p>엔터프라이즈급 보안...<br/>아마도요.</p>
   </div>
   <div class="card">
     <div class="icon">⚡</div>
     <h3>빠름</h3>
-    <p>엄청나게 빠른 성능을 자랑합니다.</p>
+    <p>엄청나게 빠른<br/>성능을 자랑합니다.</p>
   </div>
   <div class="card">
     <div class="icon">📦</div>
     <h3>신뢰성</h3>
-    <p>99.9% 가동률을 보장합니다.</p>
+    <p>99.9% 가동률을<br/>보장합니다.</p>
   </div>
 </div>
 
 <footer>
-  SecureShop v1.0.0 · 나쁜 보안 습관으로 만들어진 사이트
+  SecureShop v1.0.0 · © 2025 TechCorp Solutions
 </footer>
 
 </body>

@@ -6,62 +6,85 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+
     nav {
       background:#161b22; padding:16px 32px;
       display:flex; justify-content:space-between; align-items:center;
       border-bottom:1px solid #30363d;
     }
     nav .logo { color:#a855f7; font-size:1.2rem; font-weight:bold; }
-    nav a { color:#8b949e; text-decoration:none; margin-left:24px; font-size:0.9rem; }
-    nav a:hover { color:#a855f7; }
-    .hero { text-align:center; padding:80px 20px; }
+    nav .nav-links a {
+      color:#8b949e; text-decoration:none;
+      margin-left:24px; font-size:0.85rem;
+    }
+    nav .nav-links a:hover { color:#a855f7; }
+
+    .hero { text-align:center; padding:72px 20px 40px; }
     .badge {
       display:inline-block; background:#1f2937;
       border:1px solid #a855f7; color:#a855f7;
       padding:4px 12px; border-radius:9999px;
-      font-size:0.75rem; margin-bottom:20px;
+      font-size:0.72rem; margin-bottom:20px;
     }
-    .hero h1 { font-size:2.2rem; color:#f0f6fc; margin-bottom:14px; }
-    .hero p { color:#8b949e; font-size:0.95rem; max-width:480px; margin:0 auto 32px; line-height:1.7; }
+    .hero h1 { font-size:2rem; color:#f0f6fc; margin-bottom:12px; }
+    .hero p { color:#8b949e; font-size:0.88rem; max-width:480px; margin:0 auto 28px; line-height:1.8; }
     .btn {
       display:inline-block; background:#a855f7; color:#fff;
-      padding:12px 28px; border-radius:6px; text-decoration:none;
-      font-weight:bold; font-size:0.9rem; margin:0 8px;
-      transition:background 0.2s;
+      padding:11px 28px; border-radius:6px; text-decoration:none;
+      font-weight:bold; font-size:0.88rem; margin:0 6px;
+      font-family:'Courier New',monospace; transition:background 0.2s;
     }
     .btn:hover { background:#9333ea; }
     .btn-outline {
       display:inline-block; border:1px solid #a855f7; color:#a855f7;
-      padding:12px 28px; border-radius:6px; text-decoration:none;
-      font-size:0.9rem; margin:0 8px; transition:all 0.2s;
+      padding:11px 28px; border-radius:6px; text-decoration:none;
+      font-size:0.88rem; margin:0 6px;
+      font-family:'Courier New',monospace; transition:all 0.2s;
     }
     .btn-outline:hover { background:#a855f7; color:#fff; }
+
+    .container { max-width:700px; margin:0 auto; padding:0 24px 60px; }
+
+    .mission-box {
+      background:#1a0d2e; border:1px solid #7c3aed;
+      border-radius:8px; padding:18px 24px;
+      margin:32px 0 28px;
+      font-size:0.83rem; line-height:1.9;
+    }
+    .mission-box b { color:#c084fc; }
+    .mission-box code {
+      background:#0d1117; color:#c084fc;
+      padding:1px 6px; border-radius:4px; font-size:0.8rem;
+    }
+
     .features {
-      display:flex; justify-content:center; gap:20px;
-      flex-wrap:wrap; padding:40px 32px 60px;
+      display:flex; justify-content:center; gap:16px; flex-wrap:wrap;
     }
     .feature {
       background:#161b22; border:1px solid #30363d;
-      border-radius:8px; padding:24px; width:200px; text-align:center;
+      border-radius:8px; padding:22px 18px; width:195px; text-align:center;
     }
-    .feature .icon { font-size:2rem; margin-bottom:12px; }
-    .feature h3 { font-size:0.95rem; color:#f0f6fc; margin-bottom:8px; }
-    .feature p { font-size:0.8rem; color:#8b949e; }
+    .feature .icon { font-size:1.8rem; margin-bottom:12px; }
+    .feature h3 { font-size:0.88rem; color:#f0f6fc; margin-bottom:8px; }
+    .feature p { font-size:0.78rem; color:#8b949e; line-height:1.6; }
+
     footer {
-      text-align:center; padding:20px; color:#484f58;
-      font-size:0.75rem; border-top:1px solid #21262d;
+      text-align:center; padding:24px; color:#484f58;
+      font-size:0.72rem; border-top:1px solid #21262d;
     }
   </style>
 </head>
 <body>
+
 <nav>
   <span class="logo">🔑 ResetBank</span>
-  <div>
+  <div class="nav-links">
     <a href="/">홈</a>
     <a href="/login">로그인</a>
     <a href="/forgot">비밀번호 찾기</a>
   </div>
 </nav>
+
 <div class="hero">
   <div class="badge">A06 · Insecure Design</div>
   <h1>ResetBank</h1>
@@ -69,23 +92,33 @@
   <a href="/forgot" class="btn">비밀번호 찾기 →</a>
   <a href="/login" class="btn-outline">로그인</a>
 </div>
-<div class="features">
-  <div class="feature">
-    <div class="icon">📧</div>
-    <h3>이메일 인증</h3>
-    <p>이메일로 인증 코드를 발송합니다.</p>
+
+<div class="container">
+  <div class="mission-box">
+    🎯 <b>미션:</b> 취약한 비밀번호 재설정 흐름을 이용해 admin 계정을 탈취하고 플래그를 획득하라.<br>
+    💡 <code>admin</code> 계정으로 비밀번호 찾기를 요청하면 <b>4자리 숫자 토큰</b>이 발급된다.<br>
+    🔧 시도 횟수 제한이 없다 — <b>브루트포스</b>로 <code>0000~9999</code> 전부 시도해보자.
   </div>
-  <div class="feature">
-    <div class="icon">🔢</div>
-    <h3>간편 코드</h3>
-    <p>4자리 숫자 코드로 간편하게 인증</p>
-  </div>
-  <div class="feature">
-    <div class="icon">⚡</div>
-    <h3>빠른 재설정</h3>
-    <p>몇 초 안에 비밀번호를 재설정</p>
+
+  <div class="features">
+    <div class="feature">
+      <div class="icon">📧</div>
+      <h3>이메일 인증</h3>
+      <p>이메일로 인증 코드를<br/>발송합니다.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🔢</div>
+      <h3>간편 코드</h3>
+      <p>4자리 숫자 코드로<br/>간편하게 인증</p>
+    </div>
+    <div class="feature">
+      <div class="icon">⚡</div>
+      <h3>빠른 재설정</h3>
+      <p>몇 초 안에 비밀번호를<br/>재설정</p>
+    </div>
   </div>
 </div>
+
 <footer>ResetBank v1.0.0 · 예측 가능한 토큰으로 만들어진 뱅킹 서비스</footer>
 </body>
 </html>

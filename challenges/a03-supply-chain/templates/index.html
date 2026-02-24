@@ -6,75 +6,161 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
     nav {
-      background: #161b22; padding: 16px 32px;
-      display: flex; justify-content: space-between; align-items: center;
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid #30363d;
     }
-    nav .logo { color: #58a6ff; font-size: 1.2rem; font-weight: bold; }
-    nav a { color: #8b949e; text-decoration: none; margin-left: 24px; font-size: 0.9rem; }
-    nav a:hover { color: #58a6ff; }
-    .hero { text-align: center; padding: 80px 20px 40px; }
-    .badge {
-      display: inline-block; background: #1f2937;
-      border: 1px solid #a855f7; color: #a855f7;
-      padding: 4px 12px; border-radius: 9999px;
-      font-size: 0.75rem; margin-bottom: 20px;
+    nav .logo { color: #a855f7; font-size: 1.2rem; font-weight: bold; }
+    nav .nav-links a {
+      color: #8b949e;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 0.85rem;
     }
-    .hero h1 { font-size: 2.2rem; color: #f0f6fc; margin-bottom: 14px; }
-    .hero p { color: #8b949e; font-size: 0.95rem; max-width: 480px; margin: 0 auto; line-height: 1.7; }
-    .section { max-width: 700px; margin: 40px auto; padding: 0 24px; }
-    .section h2 { color: #f0f6fc; font-size: 1rem; margin-bottom: 16px; }
+    nav .nav-links a:hover { color: #a855f7; }
+
+    .hero {
+      text-align: center;
+      padding: 72px 20px 40px;
+    }
+    .badge {
+      display: inline-block;
+      background: #1f2937;
+      border: 1px solid #a855f7;
+      color: #a855f7;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 2rem; color: #f0f6fc; margin-bottom: 12px; }
+    .hero p { color: #8b949e; font-size: 0.88rem; line-height: 1.8; max-width: 480px; margin: 0 auto; }
+
+    .container { max-width: 700px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* 미션 박스 */
+    .mission-box {
+      background: #1a0d2e;
+      border: 1px solid #7c3aed;
+      border-radius: 8px;
+      padding: 18px 24px;
+      margin: 36px 0 28px;
+      font-size: 0.83rem;
+      line-height: 1.9;
+    }
+    .mission-box b { color: #c084fc; }
+    .mission-box code {
+      background: #0d1117;
+      color: #c084fc;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    /* 패키지 목록 */
+    .section-title { color: #f0f6fc; font-size: 0.9rem; margin-bottom: 14px; }
     .dep-list {
-      background: #161b22; border: 1px solid #30363d;
-      border-radius: 8px; padding: 20px;
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
     }
     .dep-item {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 0; border-bottom: 1px solid #21262d; font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid #21262d;
+      font-size: 0.83rem;
     }
     .dep-item:last-child { border-bottom: none; }
-    .dep-name { color: #58a6ff; }
-    .dep-ver { color: #8b949e; }
-    .dep-status { padding: 2px 8px; border-radius: 9999px; font-size: 0.7rem; }
-    .safe { background: #0f2a1a; color: #3fb950; border: 1px solid #238636; }
-    .warn { background: #2d1e00; color: #f59e0b; border: 1px solid #d97706; }
-    .danger { background: #3d1f1f; color: #f85149; border: 1px solid #f85149; }
+    .dep-name { color: #a855f7; }
+    .dep-ver { color: #484f58; }
+    .dep-status {
+      padding: 2px 10px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+    }
+    .safe   { background: #0f2a1a; color: #3fb950; border: 1px solid #23863655; }
+    .warn   { background: #2d1e00; color: #f59e0b; border: 1px solid #d9770655; }
+    .danger { background: #2d1515; color: #f85149; border: 1px solid #f8514955; }
+
+    /* 터미널 */
     .terminal {
-      background: #010409; border: 1px solid #30363d;
-      border-radius: 8px; padding: 20px; margin-top: 24px;
-      font-size: 0.8rem; line-height: 1.8;
+      background: #010409;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 0.8rem;
+      line-height: 1.9;
     }
     .terminal .prompt { color: #3fb950; }
-    .terminal .cmd { color: #f0f6fc; }
-    .terminal .out { color: #8b949e; }
-    .terminal .highlight { color: #f59e0b; }
+    .terminal .cmd    { color: #f0f6fc; }
+    .terminal .out    { color: #8b949e; }
+    .terminal .hl     { color: #f59e0b; }
+    .terminal .warn   { color: #f85149; }
+
+    /* 힌트 */
     .hint-box {
-      margin-top: 24px; background: #1c2128; border: 1px solid #30363d;
-      border-radius: 8px; padding: 16px 20px; font-size: 0.8rem; color: #8b949e;
+      background: #1a0d2e;
+      border: 1px solid #7c3aed;
+      border-radius: 8px;
+      padding: 14px 20px;
+      font-size: 0.8rem;
+      color: #c084fc;
+      line-height: 1.8;
     }
-    .hint-box code { background: #0d1117; padding: 2px 6px; border-radius: 4px; color: #58a6ff; }
+    .hint-box code {
+      background: #0d1117;
+      color: #c084fc;
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
     footer {
-      text-align: center; padding: 30px; color: #484f58;
-      font-size: 0.75rem; border-top: 1px solid #21262d; margin-top: 60px;
+      text-align: center;
+      padding: 24px;
+      color: #484f58;
+      font-size: 0.72rem;
+      border-top: 1px solid #21262d;
     }
   </style>
 </head>
 <body>
+
 <nav>
   <span class="logo">📦 NodeShop</span>
-  <div>
+  <div class="nav-links">
     <a href="/">홈</a>
+    <a href="/about">소개</a>
     <a href="/package.json">package.json</a>
   </div>
 </nav>
+
 <div class="hero">
-  <div class="badge">A03 · 소프트웨어 공급망 취약점</div>
+  <div class="badge">A03 · Software & Data Integrity Failures</div>
   <h1>NodeShop</h1>
   <p>오픈소스 쇼핑몰 플랫폼입니다.<br/>의존성 패키지는 항상 최신으로 유지하고 있어요!</p>
 </div>
-<div class="section">
-  <h2>📦 설치된 패키지 현황</h2>
+
+<div class="container">
+
+  <!-- 미션 -->
+  <div class="mission-box">
+    🎯 <b>미션:</b> 의존성 패키지 중 백도어가 심어진 패키지를 찾아 플래그를 획득하라.<br>
+    💡 <code>/package.json</code> 을 분석하고 수상한 패키지의 내부 코드를 살펴보자.<br>
+    🔧 브라우저가 아닌 <b>curl</b> 또는 <b>Burp Suite</b> 로 백도어 엔드포인트에 직접 요청해야 한다.
+  </div>
+
+  <h2 class="section-title">📦 설치된 패키지 현황</h2>
+
   <div class="dep-list">
     <div class="dep-item">
       <span class="dep-name">express</span>
@@ -102,20 +188,23 @@
     <div><span class="prompt">$</span> <span class="cmd">cat package.json</span></div>
     <div class="out">  "scripts": {</div>
     <div class="out">    "start": "node index.js",</div>
-    <div class="out highlight">    "postinstall": "node node_modules/ld4sh/index.js"</div>
+    <div class="out hl">    "postinstall": "node node_modules/ld4sh/index.js"</div>
     <div class="out">  }</div>
-    <br/>
-    <div class="out">⚠️  경고: 알 수 없는 패키지 "ld4sh" 가 의존성에서 발견되었습니다.</div>
+    <br>
+    <div class="warn">⚠ 경고: 알 수 없는 패키지 "ld4sh" 가 설치 시 자동 실행됩니다.</div>
   </div>
 
   <div class="hint-box">
-    💡 <strong>힌트:</strong> <code>/package.json</code> 을 분석해보세요.
-    수상한 패키지가 설치 시 자동으로 실행됩니다.
-    패키지 내부 코드를 살펴보면 뭔가 숨겨져 있을 수도 있습니다.
+    💡 <b>힌트:</b> <code>postinstall</code> 스크립트가 수상하다.<br>
+    <code>/node_modules/ld4sh/index.js</code> 내부 코드를 분석해보자.<br>
+    Base64 디코딩이 필요할 수도 있다.
   </div>
+
 </div>
+
 <footer>
   NodeShop v1.0.0 · 완전히 안전한 오픈소스 패키지로 구동됩니다
 </footer>
+
 </body>
 </html>

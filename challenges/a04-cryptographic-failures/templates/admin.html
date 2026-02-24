@@ -6,50 +6,131 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
     nav {
       background: #161b22; padding: 16px 32px;
       display: flex; justify-content: space-between; align-items: center;
       border-bottom: 1px solid #30363d;
     }
-    nav .logo { color: #f85149; font-size: 1.2rem; font-weight: bold; }
-    nav span { color: #8b949e; font-size: 0.8rem; }
-    .container { max-width: 800px; margin: 60px auto; padding: 0 24px; }
-    .error-box {
-      background: #3d1f1f; border: 1px solid #f85149;
-      border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 32px;
+    nav .logo { color: #f85149; font-size: 1rem; font-weight: bold; }
+    nav .nav-right { display: flex; align-items: center; gap: 20px; }
+    nav .user-badge { font-size: 0.8rem; color: #8b949e; }
+    nav .user-badge b { color: #f85149; }
+    nav a { color: #8b949e; text-decoration: none; font-size: 0.8rem; }
+    nav a:hover { color: #f85149; }
+
+    .hero { text-align: center; padding: 48px 20px 32px; }
+    .badge {
+      display: inline-block; background: #1f2937;
+      border: 1px solid #f59e0b; color: #f59e0b;
+      padding: 4px 12px; border-radius: 9999px;
+      font-size: 0.72rem; margin-bottom: 16px;
     }
-    .error-box p { color: #f85149; font-size: 0.9rem; }
+    .hero h1 { font-size: 1.5rem; color: #f0f6fc; margin-bottom: 8px; }
+    .hero p { color: #8b949e; font-size: 0.82rem; }
+
+    .container { max-width: 700px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* 에러 박스 */
+    .error-box {
+      background: #2d1515; border: 1px solid #f85149;
+      border-radius: 10px; padding: 24px; text-align: center; margin-bottom: 28px;
+    }
+    .error-box p { color: #f85149; font-size: 0.88rem; }
+
+    /* 플래그 박스 */
     .flag-box {
       background: #0f2a1a; border: 1px solid #238636;
-      border-radius: 10px; padding: 32px; text-align: center; margin-bottom: 32px;
+      border-radius: 10px; padding: 28px; text-align: center; margin-bottom: 24px;
     }
-    .flag-box h2 { color: #3fb950; font-size: 1.2rem; margin-bottom: 16px; }
-    .flag-box .flag {
+    .flag-box h2 { color: #3fb950; font-size: 1rem; margin-bottom: 16px; }
+    .flag-value {
       background: #0d1117; border: 1px dashed #238636;
       padding: 14px 20px; border-radius: 6px;
-      color: #3fb950; font-size: 1.1rem; letter-spacing: 1px; word-break: break-all;
+      color: #3fb950; font-size: 1rem; letter-spacing: 1px; word-break: break-all;
     }
-    .info {
+
+    /* 공격 흐름 */
+    .flow-card {
       background: #161b22; border: 1px solid #30363d;
-      border-radius: 8px; padding: 24px;
+      border-radius: 8px; overflow: hidden; margin-bottom: 20px;
     }
-    .info h3 { color: #f0f6fc; margin-bottom: 16px; font-size: 0.95rem; }
-    .info ul { list-style: none; }
-    .info li {
-      padding: 10px 0; border-bottom: 1px solid #21262d;
-      font-size: 0.85rem; color: #8b949e; line-height: 1.6;
+    .flow-header {
+      padding: 14px 20px; border-bottom: 1px solid #21262d;
+      font-size: 0.85rem; color: #f0f6fc; font-weight: bold;
     }
-    .info li:last-child { border-bottom: none; }
-    .vuln { color: #f85149; }
-    .fix { color: #3fb950; }
+    .flow-body { padding: 20px; }
+    .flow-step {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 10px 0; border-bottom: 1px solid #21262d; font-size: 0.82rem;
+    }
+    .flow-step:last-child { border-bottom: none; }
+    .step-num {
+      background: #1f2937; color: #f59e0b;
+      border: 1px solid #d97706; border-radius: 4px;
+      padding: 2px 8px; font-size: 0.75rem; white-space: nowrap; flex-shrink: 0;
+    }
+    .step-text { color: #8b949e; line-height: 1.6; }
+    .step-text code {
+      background: #0d1117; color: #79c0ff;
+      padding: 1px 5px; border-radius: 3px; font-size: 0.78rem;
+    }
+    .step-text b { color: #f0f6fc; }
+
+    /* 취약점/대응방안 */
+    .info-card {
+      background: #161b22; border: 1px solid #30363d;
+      border-radius: 8px; overflow: hidden;
+    }
+    .info-header {
+      padding: 14px 20px; border-bottom: 1px solid #21262d;
+      font-size: 0.85rem; color: #f0f6fc; font-weight: bold;
+    }
+    .info-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 20px; border-bottom: 1px solid #21262d; font-size: 0.82rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .tag-vuln {
+      background: #2d1515; color: #f85149;
+      border: 1px solid #f8514933; border-radius: 4px;
+      padding: 2px 8px; font-size: 0.72rem; white-space: nowrap; flex-shrink: 0;
+    }
+    .tag-fix {
+      background: #0f2a1a; color: #3fb950;
+      border: 1px solid #23863633; border-radius: 4px;
+      padding: 2px 8px; font-size: 0.72rem; white-space: nowrap; flex-shrink: 0;
+    }
+    .info-text { color: #8b949e; line-height: 1.6; }
+    .info-text code {
+      background: #0d1117; color: #79c0ff;
+      padding: 1px 5px; border-radius: 3px; font-size: 0.78rem;
+    }
   </style>
 </head>
 <body>
+
 <nav>
   <span class="logo">⚠️ 관리자 페이지</span>
-  <span>{{ user }} 님 (관리자 권한)</span>
+  <div class="nav-right">
+    <span class="user-badge">logged in as <b>{{ user }}</b></span>
+    <a href="/">← 홈</a>
+  </div>
 </nav>
+
+<div class="hero">
+  <div class="badge">A04 · Cryptographic Failures</div>
+  {% if flag %}
+  <h1>Admin Panel Compromised</h1>
+  <p>취약한 암호화로 admin 계정 탈취 성공</p>
+  {% else %}
+  <h1>접근 거부</h1>
+  <p>관리자 권한이 필요합니다.</p>
+  {% endif %}
+</div>
+
 <div class="container">
+
   {% if error %}
   <div class="error-box">
     <p>🚫 {{ error }}</p>
@@ -57,22 +138,78 @@
   {% endif %}
 
   {% if flag %}
+  <!-- 플래그 -->
   <div class="flag-box">
-    <h2>🚩 축하합니다! 플래그를 찾았습니다!</h2>
-    <div class="flag">{{ flag }}</div>
+    <h2>🚩 플래그를 획득했습니다!</h2>
+    <div class="flag-value">{{ flag }}</div>
   </div>
-  <div class="info">
-    <h3>🔍 어떤 취약점이 있었나요?</h3>
-    <ul>
-      <li><span class="vuln">[취약점]</span> MD5는 암호화가 아닌 단방향 해시 함수입니다. 레인보우 테이블과 사전 공격에 취약합니다.</li>
-      <li><span class="vuln">[취약점]</span> Salt 없이 MD5만 사용하면 동일한 비밀번호는 항상 동일한 해시값을 가집니다.</li>
-      <li><span class="vuln">[취약점]</span> /api/users 엔드포인트가 인증 없이 비밀번호 해시를 노출했습니다.</li>
-      <li><span class="fix">[대응방안]</span> bcrypt, Argon2 등 비밀번호 전용 해싱 알고리즘을 사용하세요.</li>
-      <li><span class="fix">[대응방안]</span> 반드시 Salt를 추가해 레인보우 테이블 공격을 방어하세요.</li>
-      <li><span class="fix">[대응방안]</span> 민감한 API 엔드포인트에는 반드시 인증을 적용하세요.</li>
-    </ul>
+
+  <!-- 공격 흐름 -->
+  <div class="flow-card">
+    <div class="flow-header">🔍 공격 흐름</div>
+    <div class="flow-body">
+      <div class="flow-step">
+        <span class="step-num">STEP 1</span>
+        <div class="step-text">
+          <b>일반 계정으로 로그인</b><br>
+          <code>user1 / password123</code> 로 로그인 후 대시보드 접근
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="step-num">STEP 2</span>
+        <div class="step-text">
+          <b>숨겨진 API 엔드포인트 발견</b><br>
+          <code>/api/users</code> 에 인증 없이 접근 → 모든 사용자의 <b>MD5 해시</b> 노출
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="step-num">STEP 3</span>
+        <div class="step-text">
+          <b>MD5 해시 크랙</b><br>
+          admin 해시 <code>0d107d09f5bbe40cade3de5c71e9e9b7</code> → 레인보우 테이블 조회 → <code>letmein</code>
+        </div>
+      </div>
+      <div class="flow-step">
+        <span class="step-num">STEP 4</span>
+        <div class="step-text">
+          <b>admin 계정으로 로그인</b><br>
+          <code>admin / letmein</code> 으로 로그인 → 관리자 패널 접근 → 플래그 획득
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 취약점/대응방안 -->
+  <div class="info-card">
+    <div class="info-header">📋 취약점 분석 및 대응방안</div>
+    <div class="info-row">
+      <span class="tag-vuln">취약점</span>
+      <div class="info-text">MD5는 암호화가 아닌 단방향 해시 함수로, 레인보우 테이블과 사전 공격에 취약합니다.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-vuln">취약점</span>
+      <div class="info-text">Salt 없이 <code>MD5</code>만 사용하면 동일한 비밀번호는 항상 동일한 해시값을 가집니다.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-vuln">취약점</span>
+      <div class="info-text"><code>/api/users</code> 엔드포인트가 인증 없이 모든 사용자의 비밀번호 해시를 노출했습니다.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-fix">대응방안</span>
+      <div class="info-text"><code>bcrypt</code>, <code>Argon2</code> 등 비밀번호 전용 해싱 알고리즘을 사용하세요.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-fix">대응방안</span>
+      <div class="info-text">반드시 Salt를 추가해 레인보우 테이블 공격을 방어하세요.</div>
+    </div>
+    <div class="info-row">
+      <span class="tag-fix">대응방안</span>
+      <div class="info-text">민감한 API 엔드포인트에는 반드시 인증 미들웨어를 적용하세요.</div>
+    </div>
   </div>
   {% endif %}
+
 </div>
+
 </body>
 </html>

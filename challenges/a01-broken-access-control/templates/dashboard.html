@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - User Profile System</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0d1117; color: #c9d1d9; font-family: 'Courier New', monospace; }
+
+    nav {
+      background: #161b22;
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #30363d;
+    }
+    nav .logo { color: #58a6ff; font-size: 1.1rem; font-weight: bold; }
+    nav .nav-right { display: flex; align-items: center; gap: 20px; }
+    nav .user-badge {
+      font-size: 0.8rem;
+      color: #8b949e;
+    }
+    nav .user-badge b { color: #3fb950; }
+    nav a { color: #8b949e; text-decoration: none; font-size: 0.8rem; }
+    nav a:hover { color: #f85149; }
+
+    .hero {
+      text-align: center;
+      padding: 48px 20px 32px;
+    }
+    .badge {
+      display: inline-block;
+      background: #1f2937;
+      border: 1px solid #58a6ff;
+      color: #58a6ff;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      margin-bottom: 16px;
+    }
+    .hero h1 { font-size: 1.6rem; color: #f0f6fc; margin-bottom: 8px; }
+    .hero p { color: #8b949e; font-size: 0.82rem; }
+
+    .container { max-width: 640px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* 미션 박스 */
+    .mission-box {
+      background: #0d2149;
+      border: 1px solid #1f4a8a;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      font-size: 0.85rem;
+      line-height: 1.9;
+    }
+    .mission-box .title { color: #58a6ff; font-weight: bold; margin-bottom: 10px; font-size: 0.88rem; }
+    .mission-box p { color: #8b949e; }
+    .mission-box code {
+      background: #0d1117;
+      color: #79c0ff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.82rem;
+    }
+    .mission-box b { color: #f0f6fc; }
+
+    /* 카드 공통 */
+    .card {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid #21262d;
+      font-size: 0.85rem;
+      color: #f0f6fc;
+      font-weight: bold;
+    }
+    .card-body { padding: 20px; }
+
+    /* 프로필 행 */
+    .profile-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid #21262d;
+      font-size: 0.83rem;
+    }
+    .profile-row:last-child { border-bottom: none; }
+    .profile-label { color: #8b949e; }
+    .profile-value { color: #f0f6fc; }
+    .profile-secret { color: #484f58; font-style: italic; }
+
+    /* POST 버튼 영역 */
+    .api-section { font-size: 0.83rem; }
+    .api-section p { color: #8b949e; margin-bottom: 14px; line-height: 1.7; }
+    .api-section code {
+      background: #0d1117;
+      color: #79c0ff;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+    .btn-post {
+      background: #1c2128;
+      color: #58a6ff;
+      border: 1px solid #1f4a8a;
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.83rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-post:hover { background: #1f2937; }
+
+    /* API 응답 카드 */
+    .response-card {
+      display: none;
+      margin-top: 14px;
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 0.82rem;
+      line-height: 1.8;
+    }
+    .response-card .key { color: #8b949e; }
+    .response-card .val { color: #f0f6fc; }
+    .response-card .val-flag { color: #3fb950; font-weight: bold; }
+    .response-card .val-admin { color: #f85149; }
+    .response-loading { margin-top: 14px; color: #484f58; font-size: 0.8rem; }
+
+    /* 플래그 제출 */
+    .flag-section { font-size: 0.83rem; }
+    .flag-input-wrap { display: flex; gap: 10px; margin-top: 4px; }
+    .flag-input-wrap input {
+      flex: 1;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      padding: 9px 14px;
+      color: #f0f6fc;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+    .flag-input-wrap input:focus { outline: none; border-color: #3fb950; }
+    .btn-submit {
+      background: #0f2a1a;
+      color: #3fb950;
+      border: 1px solid #238636;
+      border-radius: 6px;
+      padding: 9px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.83rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-submit:hover { background: #1a3d28; }
+    .flag-result { margin-top: 12px; font-size: 0.83rem; }
+    .flag-correct {
+      background: #0f2a1a;
+      border: 1px solid #238636;
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: #3fb950;
+    }
+    .flag-wrong {
+      background: #2d1515;
+      border: 1px solid #f85149;
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: #f85149;
+    }
+
+    /* 힌트 */
+    .hint-box {
+      background: #2d1e00;
+      border: 1px solid #d97706;
+      border-radius: 8px;
+      padding: 14px 20px;
+      font-size: 0.8rem;
+      color: #f59e0b;
+      line-height: 1.8;
+    }
+    .hint-box span { color: #d97706; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">🔓 User Profile System</span>
+  <div class="nav-right">
+    <span class="user-badge">logged in as <b>{{ user.username }}</b></span>
+    <a href="/logout">logout</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">A01 · Broken Access Control</div>
+  <h1>사용자 프로필 시스템</h1>
+  <p>OWASP Top 10 - A01: Broken Access Control (IDOR via POST body)</p>
+</div>
+
+<div class="container">
+
+  <!-- 미션 -->
+  <div class="mission-box">
+    <div class="title">🎯 미션</div>
+    <p>
+      현재 <b>{{ user.username }}</b> 으로 로그인되어 있다.<br>
+      프로필 조회는 <code>POST /api/profile</code> 요청으로 이루어지며,<br>
+      요청 body에 <code>{"user_id": {{ user.id }}}</code> 가 담긴다.<br><br>
+      <b>Burp Suite</b> 로 이 요청을 가로채 <code>user_id</code> 를 변조하여<br>
+      admin의 secret 을 탈취하라.
+    </p>
+  </div>
+
+  <!-- 내 프로필 -->
+  <div class="card">
+    <div class="card-header">📋 Your Profile</div>
+    <div class="card-body">
+      <div class="profile-row">
+        <span class="profile-label">ID</span>
+        <span class="profile-value">{{ user.id }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Username</span>
+        <span class="profile-value">{{ user.username }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Email</span>
+        <span class="profile-value">{{ user.email }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Role</span>
+        <span class="profile-value">{{ user.role }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Secret</span>
+        <span class="profile-secret">{{ user.secret }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- API 호출 -->
+  <div class="card">
+    <div class="card-header">📡 POST /api/profile</div>
+    <div class="card-body api-section">
+      <p>
+        아래 버튼이 <code>POST /api/profile</code> 을 호출한다.<br>
+        <b>Burp Suite Intercept ON</b> 상태에서 클릭 →<br>
+        요청 body의 <code>user_id</code> 를 <code>1</code> 로 변조 후 Forward.
+      </p>
+      <button class="btn-post" onclick="fetchProfile()" data-uid="{{ user.id }}">
+        📤 POST /api/profile  { "user_id": {{ user.id }} }
+      </button>
+      <div id="loading" class="response-loading" style="display:none;">⏳ 응답 대기 중...</div>
+      <div id="response-card" class="response-card"></div>
+    </div>
+  </div>
+
+  <!-- 플래그 제출 -->
+  <div class="card">
+    <div class="card-header">🚩 Flag Submit</div>
+    <div class="card-body flag-section">
+      <div class="flag-input-wrap">
+        <input type="text" id="flag-input" placeholder="OWASP{...}">
+        <button class="btn-submit" onclick="submitFlag()">SUBMIT</button>
+      </div>
+      <div id="flag-result" class="flag-result"></div>
+    </div>
+  </div>
+
+  <!-- 힌트 -->
+  <div class="hint-box">
+    <span>💡 힌트:</span>
+    서버는 세션이 아닌 <b>요청 body의 user_id</b>를 그대로 신뢰한다.<br>
+    Burp Suite → Proxy → Intercept is ON → 버튼 클릭 → body 수정 → Forward
+  </div>
+
+</div>
+
+<script>
+  const MY_USER_ID = parseInt(document.querySelector('.btn-post').dataset.uid, 10);
+
+  async function fetchProfile() {
+    const loading = document.getElementById('loading');
+    const card    = document.getElementById('response-card');
+
+    loading.style.display = 'block';
+    card.style.display    = 'none';
+    card.innerHTML        = '';
+
+    try {
+      const res  = await fetch('/api/profile', {
+        method:      'POST',
+        headers:     { 'Content-Type': 'application/json' },
+        body:        JSON.stringify({ user_id: MY_USER_ID }),
+        credentials: 'include'
+      });
+      const data = await res.json();
+      loading.style.display = 'none';
+
+      if (data.error) {
+        card.innerHTML = `<span style="color:#f85149">⚠ ${data.error}</span>`;
+        card.style.display = 'block';
+        return;
+      }
+
+      const isAdmin  = data.role === 'Administrator';
+      const flagHtml = isAdmin
+        ? `<span class="val val-flag">${data.secret}</span>`
+        : `<span class="val">${data.secret}</span>`;
+      const roleHtml = isAdmin
+        ? `<span class="val val-admin">${data.role}</span>`
+        : `<span class="val">${data.role}</span>`;
+
+      card.innerHTML = `
+        <div><span class="key">id: </span><span class="val">${data.id}</span></div>
+        <div><span class="key">username: </span><span class="val">${data.username}</span></div>
+        <div><span class="key">email: </span><span class="val">${data.email}</span></div>
+        <div><span class="key">role: </span>${roleHtml}</div>
+        <div><span class="key">secret: </span>${flagHtml}</div>
+        ${isAdmin ? '<div style="margin-top:10px; color:#3fb950;">✅ admin 데이터 탈취 성공! 플래그를 제출하라.</div>' : ''}
+      `;
+      card.style.display = 'block';
+
+    } catch (e) {
+      loading.style.display = 'none';
+      card.innerHTML = `<span style="color:#f85149">요청 실패: ${e}</span>`;
+      card.style.display = 'block';
+    }
+  }
+
+  function submitFlag() {
+    const input  = document.getElementById('flag-input').value.trim();
+    const result = document.getElementById('flag-result');
+    if (input === 'OWASP{p0st_b0dy_1d0r_pwn3d}') {
+      result.innerHTML = `
+        <div class="flag-correct">
+          ✅ <b>Correct!</b> Challenge Cleared!<br>
+          <span style="font-size:0.78rem; margin-top:4px; display:block; color:#8b949e;">
+            POST body의 user_id를 신뢰하는 IDOR 취약점을 통해 admin 데이터를 탈취했다.
+          </span>
+        </div>`;
+    } else {
+      result.innerHTML = `<div class="flag-wrong">❌ Wrong flag. Keep trying!</div>`;
+    }
+  }
+</script>
+
+</body>
+</html>

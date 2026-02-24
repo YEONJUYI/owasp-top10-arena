@@ -6,58 +6,191 @@
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+
     nav {
       background:#161b22; padding:16px 32px;
       display:flex; justify-content:space-between; align-items:center;
       border-bottom:1px solid #30363d;
     }
     nav .logo { color:#ec4899; font-size:1.2rem; font-weight:bold; }
-    nav a { color:#8b949e; text-decoration:none; font-size:0.85rem; }
+    nav .nav-right { display:flex; align-items:center; gap:20px; }
+    nav .user-badge { font-size:0.8rem; color:#8b949e; }
+    nav .user-badge b { color:#ec4899; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.8rem; }
     nav a:hover { color:#f85149; }
-    .container { max-width:700px; margin:60px auto; padding:0 24px; }
-    h1 { color:#f0f6fc; font-size:1.3rem; margin-bottom:8px; }
-    .sub { color:#8b949e; font-size:0.85rem; margin-bottom:28px; }
+
+    .hero { text-align:center; padding:48px 20px 32px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #ec4899; color:#ec4899;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.72rem; margin-bottom:16px;
+    }
+    .hero h1 { font-size:1.5rem; color:#f0f6fc; margin-bottom:8px; }
+    .hero p { color:#8b949e; font-size:0.82rem; }
+
+    .container { max-width:640px; margin:0 auto; padding:0 24px 60px; }
+
     .card {
       background:#161b22; border:1px solid #30363d;
-      border-radius:8px; padding:24px; margin-bottom:20px;
+      border-radius:8px; overflow:hidden; margin-bottom:20px;
     }
-    .card h2 { color:#f0f6fc; font-size:0.95rem; margin-bottom:14px; }
+    .card-header {
+      padding:14px 20px; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#f0f6fc; font-weight:bold;
+    }
+    .card-body { padding:20px; }
+
+    .profile-row {
+      display:flex; justify-content:space-between;
+      padding:9px 0; border-bottom:1px solid #21262d; font-size:0.83rem;
+    }
+    .profile-row:last-child { border-bottom:none; }
+    .profile-label { color:#8b949e; }
+    .profile-value { color:#f0f6fc; }
     .tag {
-      display:inline-block; background:#1f2937;
-      border:1px solid #30363d; color:#8b949e;
-      padding:2px 8px; border-radius:4px; font-size:0.75rem;
+      background:#1f2937; border:1px solid #30363d;
+      color:#8b949e; padding:2px 8px;
+      border-radius:4px; font-size:0.72rem;
     }
-    .info {
-      background:#1c2128; border:1px solid #30363d;
-      border-radius:8px; padding:20px;
-      font-size:0.82rem; color:#8b949e; line-height:1.9;
+
+    /* JWT 토큰 뷰어 */
+    .token-viewer { font-size:0.78rem; line-height:1.9; }
+    .token-viewer .token-raw {
+      background:#010409; border:1px solid #21262d;
+      border-radius:6px; padding:12px 14px;
+      word-break:break-all; margin-bottom:14px;
+      font-size:0.75rem; color:#8b949e;
     }
-    .info strong { color:#ec4899; }
-    .info code { background:#0d1117; padding:2px 6px; border-radius:4px; color:#ec4899; }
+    .token-part-header  { color:#ec4899; }
+    .token-part-payload { color:#f59e0b; }
+    .token-part-sig     { color:#3fb950; }
+
+    .token-decoded {
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    }
+    .token-section {
+      background:#010409; border:1px solid #21262d;
+      border-radius:6px; padding:10px 12px;
+    }
+    .token-section .label {
+      font-size:0.72rem; margin-bottom:6px; font-weight:bold;
+    }
+    .token-section.header .label { color:#ec4899; }
+    .token-section.payload .label { color:#f59e0b; }
+    .token-section pre {
+      font-size:0.75rem; color:#8b949e; white-space:pre-wrap; word-break:break-all;
+    }
+
+    /* 힌트 */
+    .hint-box {
+      background:#1a0818; border:1px solid #9d174d;
+      border-radius:8px; padding:16px 20px;
+      font-size:0.82rem; color:#f9a8d4; line-height:1.9;
+    }
+    .hint-box b { color:#f9a8d4; }
+    .hint-box code {
+      background:#0d1117; color:#f9a8d4;
+      padding:1px 6px; border-radius:4px; font-size:0.78rem;
+    }
   </style>
 </head>
 <body>
+
 <nav>
   <span class="logo">🔑 JWTBank</span>
-  <a href="/logout">로그아웃</a>
+  <div class="nav-right">
+    <span class="user-badge">logged in as <b>{{ user }}</b></span>
+    <a href="/logout">logout</a>
+  </div>
 </nav>
-<div class="container">
+
+<div class="hero">
+  <div class="badge">A07 · Authentication Failures</div>
   <h1>내 대시보드</h1>
-  <p class="sub">일반 사용자 권한으로 로그인되었습니다.</p>
-
-  <div class="card">
-    <h2>👤 내 계정 정보</h2>
-    <p style="font-size:0.85rem; color:#8b949e;">
-      사용자명: <strong style="color:#f0f6fc;">{{ user }}</strong><br/>
-      권한: <span class="tag">{{ role }}</span>
-    </p>
-  </div>
-
-  <div class="info">
-    💡 <strong>힌트:</strong> 로그인 후 인증 토큰이 발급됩니다.<br/>
-    개발자 도구 → <code>Application</code> → <code>Cookies</code> 에서 토큰을 확인해보세요.<br/>
-    토큰의 구조를 분석하고, <code>/admin</code> 엔드포인트에 접근해보세요.
-  </div>
+  <p>일반 사용자 권한으로 로그인되었습니다.</p>
 </div>
+
+<div class="container">
+
+  <!-- 계정 정보 -->
+  <div class="card">
+    <div class="card-header">👤 내 계정 정보</div>
+    <div class="card-body">
+      <div class="profile-row">
+        <span class="profile-label">Username</span>
+        <span class="profile-value">{{ user }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Role</span>
+        <span class="profile-value"><span class="tag">{{ role }}</span></span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Admin Access</span>
+        <span class="profile-value" style="color:#484f58;">접근 불가</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- JWT 토큰 뷰어 -->
+  <div class="card">
+    <div class="card-header">🎫 JWT Token Viewer</div>
+    <div class="card-body token-viewer">
+      <div class="token-raw" id="tokenRaw">토큰 로딩 중...</div>
+      <div class="token-decoded">
+        <div class="token-section header">
+          <div class="label">HEADER</div>
+          <pre id="tokenHeader">{ }</pre>
+        </div>
+        <div class="token-section payload">
+          <div class="label">PAYLOAD</div>
+          <pre id="tokenPayload">{ }</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 힌트 -->
+  <div class="hint-box">
+    💡 <b>힌트:</b> JWT는 <code>header.payload.signature</code> 구조로 Base64URL 인코딩된다.<br>
+    header의 <code>"alg"</code> 를 <code>"none"</code> 으로, payload의 <code>"role"</code> 을 <code>"admin"</code> 으로 변조하자.<br>
+    서명은 빈 문자열로 두고 (<code>header.payload.</code>) <code>curl -H "Authorization: Bearer &lt;token&gt;" http://localhost:5006/admin</code> 으로 접근하라.
+  </div>
+
+</div>
+
+<script>
+  // 쿠키에서 JWT 토큰 읽어서 파싱 후 표시
+  function getCookie(name) {
+    const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return m ? m.pop() : '';
+  }
+
+  function b64urlDecode(s) {
+    s = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4) s += '=';
+    try { return JSON.parse(atob(s)); } catch { return null; }
+  }
+
+  const token = getCookie('token');
+  if (token) {
+    const parts = token.split('.');
+    // 색상 강조
+    document.getElementById('tokenRaw').innerHTML =
+      `<span class="token-part-header">${parts[0]}</span>` +
+      `<span style="color:#484f58">.</span>` +
+      `<span class="token-part-payload">${parts[1]}</span>` +
+      `<span style="color:#484f58">.</span>` +
+      `<span class="token-part-sig">${parts[2]}</span>`;
+
+    const header  = b64urlDecode(parts[0]);
+    const payload = b64urlDecode(parts[1]);
+    if (header)  document.getElementById('tokenHeader').textContent  = JSON.stringify(header,  null, 2);
+    if (payload) document.getElementById('tokenPayload').textContent = JSON.stringify(payload, null, 2);
+  } else {
+    document.getElementById('tokenRaw').textContent = '쿠키에서 토큰을 찾을 수 없음';
+  }
+</script>
+
 </body>
 </html>

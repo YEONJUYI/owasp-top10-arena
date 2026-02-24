@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8"/>
-  <title>로그인 - JWTBank</title>
+  <title>로그인 - ResetBank</title>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -15,7 +15,7 @@
 
     .badge {
       display:inline-block; background:#1f2937;
-      border:1px solid #ec4899; color:#ec4899;
+      border:1px solid #a855f7; color:#a855f7;
       padding:4px 12px; border-radius:9999px;
       font-size:0.72rem; margin-bottom:20px;
     }
@@ -41,23 +41,23 @@
       font-family:'Courier New',monospace; font-size:0.88rem;
       margin-bottom:18px; transition:border-color 0.2s;
     }
-    input:focus { outline:none; border-color:#ec4899; }
+    input:focus { outline:none; border-color:#a855f7; }
 
     .btn-login {
-      width:100%; background:#831843; color:#f9a8d4;
-      border:1px solid #9d174d; border-radius:6px; padding:10px;
+      width:100%; background:#581c87; color:#c084fc;
+      border:1px solid #7c3aed; border-radius:6px; padding:10px;
       font-family:'Courier New',monospace; font-size:0.88rem;
       cursor:pointer; transition:background 0.2s;
     }
-    .btn-login:hover { background:#9d174d; }
+    .btn-login:hover { background:#6b21a8; }
 
     .hint {
-      margin-top:20px; background:#1a0818;
-      border:1px solid #9d174d; border-radius:6px;
-      padding:10px 14px; font-size:0.75rem; color:#f9a8d4; line-height:1.7;
+      margin-top:20px; background:#1a0d2e;
+      border:1px solid #7c3aed; border-radius:6px;
+      padding:10px 14px; font-size:0.75rem; color:#c084fc; line-height:1.7;
     }
     .hint code {
-      background:#0d1117; color:#f9a8d4;
+      background:#0d1117; color:#c084fc;
       padding:1px 5px; border-radius:3px;
     }
     .back {
@@ -70,9 +70,9 @@
 <body>
 
 <div class="login-wrap">
-  <div class="badge">A07 · Authentication Failures</div>
-  <h1>🔑 JWTBank</h1>
-  <p class="sub">일반 계정으로 로그인 후 JWT 토큰을 분석하세요.</p>
+  <div class="badge">A06 · Insecure Design</div>
+  <h1>🔑 ResetBank</h1>
+  <p class="sub">계정에 로그인하세요.</p>
 
   <div class="login-card">
     {% if error %}
@@ -89,7 +89,7 @@
 
     <div class="hint">
       💡 테스트 계정: <code>user1</code> / <code>password123</code><br>
-      로그인 후 쿠키의 JWT 토큰 구조를 분석해보자.
+      admin 비밀번호는 <a href="/forgot" style="color:#c084fc;">비밀번호 찾기</a>로 우회하라.
     </div>
   </div>
 

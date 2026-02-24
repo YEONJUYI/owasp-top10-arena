@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <title>대시보드 - ResetBank</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#0d1117; color:#c9d1d9; font-family:'Courier New',monospace; }
+
+    nav {
+      background:#161b22; padding:16px 32px;
+      display:flex; justify-content:space-between; align-items:center;
+      border-bottom:1px solid #30363d;
+    }
+    nav .logo { color:#a855f7; font-size:1.2rem; font-weight:bold; }
+    nav .nav-right { display:flex; align-items:center; gap:20px; }
+    nav .user-badge { font-size:0.8rem; color:#8b949e; }
+    nav .user-badge b { color:#a855f7; }
+    nav a { color:#8b949e; text-decoration:none; font-size:0.8rem; }
+    nav a:hover { color:#f85149; }
+
+    .hero { text-align:center; padding:48px 20px 32px; }
+    .badge {
+      display:inline-block; background:#1f2937;
+      border:1px solid #a855f7; color:#a855f7;
+      padding:4px 12px; border-radius:9999px;
+      font-size:0.72rem; margin-bottom:16px;
+    }
+    .hero h1 { font-size:1.5rem; color:#f0f6fc; margin-bottom:8px; }
+    .hero p { color:#8b949e; font-size:0.82rem; }
+
+    .container { max-width:640px; margin:0 auto; padding:0 24px 60px; }
+
+    .card {
+      background:#161b22; border:1px solid #30363d;
+      border-radius:8px; overflow:hidden; margin-bottom:20px;
+    }
+    .card-header {
+      padding:14px 20px; border-bottom:1px solid #21262d;
+      font-size:0.85rem; color:#f0f6fc; font-weight:bold;
+    }
+    .card-body { padding:20px; }
+    .profile-row {
+      display:flex; justify-content:space-between;
+      padding:9px 0; border-bottom:1px solid #21262d; font-size:0.83rem;
+    }
+    .profile-row:last-child { border-bottom:none; }
+    .profile-label { color:#8b949e; }
+    .profile-value { color:#f0f6fc; }
+    .tag {
+      background:#1f2937; border:1px solid #30363d;
+      color:#8b949e; padding:2px 8px;
+      border-radius:4px; font-size:0.72rem;
+    }
+
+    .hint-box {
+      background:#1a0d2e; border:1px solid #7c3aed;
+      border-radius:8px; padding:16px 20px;
+      font-size:0.82rem; color:#c084fc; line-height:1.8;
+    }
+    .hint-box b { color:#c084fc; }
+    .hint-box code {
+      background:#0d1117; color:#c084fc;
+      padding:1px 6px; border-radius:4px; font-size:0.78rem;
+    }
+    .hint-box a { color:#c084fc; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="logo">🔑 ResetBank</span>
+  <div class="nav-right">
+    <span class="user-badge">logged in as <b>{{ user }}</b></span>
+    <a href="/logout">logout</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">A06 · Insecure Design</div>
+  <h1>내 대시보드</h1>
+  <p>일반 사용자 권한으로 로그인되었습니다.</p>
+</div>
+
+<div class="container">
+
+  <div class="card">
+    <div class="card-header">👤 내 계정 정보</div>
+    <div class="card-body">
+      <div class="profile-row">
+        <span class="profile-label">Username</span>
+        <span class="profile-value">{{ user }}</span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Role</span>
+        <span class="profile-value"><span class="tag">일반 사용자</span></span>
+      </div>
+      <div class="profile-row">
+        <span class="profile-label">Admin Access</span>
+        <span class="profile-value" style="color:#484f58;">접근 불가</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint-box">
+    💡 <b>힌트:</b> admin 계정 비밀번호를 모른다면 <a href="/forgot">비밀번호 찾기</a>를 이용해보자.<br>
+    발급되는 <code>4자리 토큰</code>은 브루트포스로 충분히 뚫을 수 있다.
+  </div>
+
+</div>
+
+</body>
+</html>
