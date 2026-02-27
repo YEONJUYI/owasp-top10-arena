@@ -21,50 +21,46 @@ export const Profile: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user) {
-      fetchUserProgress();
-      fetchUserRank();
-    }
+    const loadData = async () => {
+      if (!user) return;
+
+      // 사용자 진행 상황 가져오기
+      const { data: progressData } = await supabase
+        .from('progress')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('solve_time', { ascending: false });
+
+      if (progressData) {
+        setProgress(progressData);
+        
+        // 총 점수 계산
+        const points = progressData
+          .filter(p => p.solved)
+          .reduce((sum, p) => {
+            const challenge = challenges.find(c => c.id === p.challenge_id);
+            return sum + (challenge?.points || 0);
+          }, 0);
+        
+        setTotalPoints(points);
+      }
+
+      // 사용자 순위 가져오기
+      const { data: leaderboardData } = await supabase
+        .from('leaderboard')
+        .select('user_id, total_points')
+        .order('total_points', { ascending: false });
+
+      if (leaderboardData) {
+        const userRank = leaderboardData.findIndex(entry => entry.user_id === user.id) + 1;
+        setRank(userRank);
+      }
+      
+      setLoading(false);
+    };
+
+    loadData();
   }, [user]);
-
-  const fetchUserProgress = async () => {
-    if (!user) return;
-
-    const { data } = await supabase
-      .from('progress')
-      .select('*')
-      .eq('user_id', user.id)
-      .order('solve_time', { ascending: false });
-
-    if (data) {
-      setProgress(data);
-      
-      // 총 점수 계산
-      const points = data
-        .filter(p => p.solved)
-        .reduce((sum, p) => {
-          const challenge = challenges.find(c => c.id === p.challenge_id);
-          return sum + (challenge?.points || 0);
-        }, 0);
-      
-      setTotalPoints(points);
-    }
-    setLoading(false);
-  };
-
-  const fetchUserRank = async () => {
-    if (!user) return;
-
-    const { data } = await supabase
-      .from('leaderboard')
-      .select('user_id, total_points')
-      .order('total_points', { ascending: false });
-
-    if (data) {
-      const userRank = data.findIndex(entry => entry.user_id === user.id) + 1;
-      setRank(userRank);
-    }
-  };
 
   if (!user) {
     return (
