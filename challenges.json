@@ -7,12 +7,13 @@
       "difficulty": "easy",
       "description": "사용자 ID를 조작하여 다른 사용자의 프로필 정보에 접근하세요. Admin 계정의 비밀 메시지를 찾으면 Flag를 획득할 수 있습니다.",
       "points": 100,
-      "flagHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "flagHash": "da54634452a0dfc7920f6f64fde6395058bfae4949d4c1ea8e13cdc573f5fa2e",
       "hints": [
-        "URL의 user_id 파라미터를 확인해보세요",
-        "user_id=1은 admin 계정입니다"
+        "세션은 인증되었지만, 권한 검증이 요청 본문(POST body)에만 의존합니다",
+        "Burp Suite Proxy를 켜고 브라우저에서 프로필 조회 시도 → /api/profile 요청을 Intercept",
+        "요청 body의 {\"user_id\": 2}를 {\"user_id\": 1}로 변조 후 Forward 또는 Repeater로 재전송"
       ],
-      "container_url": "https://owasp-a01-broken-access.onrender.com",
+      "container_url": "http://localhost:8001",
       "icon": "🔓",
       "tags": ["IDOR", "Access Control", "Parameter Tampering"]
     },
@@ -23,12 +24,13 @@
       "difficulty": "easy",
       "description": "잘못 설정된 서버에서 민감한 정보를 찾아보세요.",
       "points": 100,
-      "flagHash": "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35",
+      "flagHash": "9415c85f4ec3087ef12df67ed2e65650b6641e97e13de2a03998d248c6f3bd62",
       "hints": [
-        "일반적인 백업 파일 이름을 시도해보세요",
-        ".git 폴더나 .env 파일을 확인해보세요"
+        "웹 크롤러가 참고하는 표준 파일을 확인해보세요 (robots.txt, sitemap.xml 등)",
+        "/robots.txt에서 숨겨진 경로를 발견하면 해당 경로로 접근",
+        "기본 크리덴셜(admin/admin, admin/password 등)을 시도해보세요"
       ],
-      "container_url": "https://owasp-a02-misconfiguration.onrender.com",
+      "container_url": "http://localhost:8002",
       "icon": "⚙️",
       "tags": ["Misconfiguration", "Information Disclosure"]
     },
@@ -39,12 +41,13 @@
       "difficulty": "medium",
       "description": "취약한 npm 패키지를 이용하여 시스템에 침투하세요.",
       "points": 200,
-      "flagHash": "4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+      "flagHash": "3b15a2ef99f7ee4667ca02c8329a558ac21712369e09d054cfbe7ef617f52e5a",
       "hints": [
-        "package.json의 의존성을 확인하세요",
-        "오래된 버전의 라이브러리가 있나요?"
+        "/package.json 파일로 의존성 목록 확인 → 'ld4sh' 패키지가 수상합니다",
+        "/node_modules/ld4sh/index.js 파일 접근 → 난독화된 코드에서 base64 문자열 발견",
+        "base64 디코딩으로 키 추출 → curl -X POST -H 'X-Telemetry-Key: 키값' http://localhost:8003/api/ld4sh/telemetry"
       ],
-      "container_url": "https://owasp-a03-supply-chain.onrender.com",
+      "container_url": "http://localhost:8003",
       "icon": "📦",
       "tags": ["Supply Chain", "Vulnerable Dependencies"]
     },
@@ -55,12 +58,13 @@
       "difficulty": "easy",
       "description": "약한 암호화를 깨고 숨겨진 데이터를 복호화하세요.",
       "points": 100,
-      "flagHash": "4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a",
+      "flagHash": "877c0a1bd2d8c787eb2bb2bb19d1880f01e2488addbeb8b45a8ff57b3daf4374",
       "hints": [
-        "Base64는 암호화가 아닙니다",
-        "MD5는 안전하지 않습니다"
+        "/api/users 엔드포인트에 인증 없이 접근 가능 → MD5 해시 노출",
+        "crackstation.net 또는 hashcat으로 MD5 해시 크랙",
+        "크랙된 비밀번호로 admin 계정 로그인 → /admin 페이지에서 Flag"
       ],
-      "container_url": "https://owasp-a04-crypto-failures.onrender.com",
+      "container_url": "http://localhost:8004",
       "icon": "🔐",
       "tags": ["Cryptography", "Weak Encryption", "Hash Cracking"]
     },
@@ -71,12 +75,13 @@
       "difficulty": "medium",
       "description": "로그인 폼의 SQL Injection 취약점을 이용하여 관리자로 로그인하세요.",
       "points": 200,
-      "flagHash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+      "flagHash": "a78062167ffbf898bfb5109535a1607b0b42b10741b20e180d66fe7b46f16677",
       "hints": [
-        "OR 1=1 구문을 시도해보세요",
-        "주석 처리를 이용하세요 (-- 또는 #)"
+        "검색창에 작은따옴표(')를 입력해서 SQL 에러 유발 → 에러 메시지에서 쿼리 구조 파악",
+        "UNION SELECT 공격으로 다른 테이블 조회: ' UNION SELECT 1,key,value FROM secrets--",
+        "또는 Burp Suite로 요청 캡처 → sqlmap -r search.txt --dump으로 자동화"
       ],
-      "container_url": "https://owasp-a05-injection.onrender.com",
+      "container_url": "http://localhost:8005",
       "icon": "💉",
       "tags": ["SQL Injection", "Authentication Bypass"]
     },
@@ -87,12 +92,13 @@
       "difficulty": "hard",
       "description": "비즈니스 로직의 설계 결함을 찾아 악용하세요.",
       "points": 300,
-      "flagHash": "e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683",
+      "flagHash": "40d8a3f861de3aad116ef9f12eebe32fb2ddb98b87cbb4ef181e207698dbf058",
       "hints": [
-        "결제 프로세스의 흐름을 분석하세요",
-        "Race Condition이 발생할 수 있나요?"
+        "비밀번호 재설정 요청 후 토큰 입력 폼 확인 → 4자리 숫자 (0000~1000)",
+        "Burp Suite Intruder로 /reset 엔드포인트에 토큰 브루트포스 공격",
+        "Payload type: Numbers (0~1000), Grep - Match로 'flag' 문자열 검색"
       ],
-      "container_url": "https://owasp-a06-insecure-design.onrender.com",
+      "container_url": "http://localhost:8006",
       "icon": "🏗️",
       "tags": ["Logic Flaw", "Race Condition", "Business Logic"]
     },
@@ -103,12 +109,13 @@
       "difficulty": "easy",
       "description": "약한 비밀번호 정책을 이용하여 계정에 접근하세요.",
       "points": 100,
-      "flagHash": "7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451",
+      "flagHash": "3506a0bb7681d5049cb176068eaddefecf8f5c46027cda3e1ceefa59e695dda7",
       "hints": [
-        "일반적인 비밀번호를 시도해보세요",
-        "Brute Force 공격을 고려하세요"
+        "user1로 로그인 후 개발자 도구 → Application → Cookies에서 'token' 값 복사",
+        "JWT 디코더(jwt.io)로 토큰 구조 확인 → {\"alg\":\"HS256\"} 를 {\"alg\":\"none\"}으로 변조",
+        "curl -H 'Authorization: Bearer 변조된토큰' http://localhost:8007/admin"
       ],
-      "container_url": "https://owasp-a07-auth-failures.onrender.com",
+      "container_url": "http://localhost:8007",
       "icon": "🔑",
       "tags": ["Authentication", "Weak Password", "Brute Force"]
     },
@@ -119,12 +126,13 @@
       "difficulty": "medium",
       "description": "서명되지 않은 쿠키를 조작하여 권한을 상승시키세요.",
       "points": 200,
-      "flagHash": "2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae",
+      "flagHash": "2126713e02390f58fdf23e7910c6a52874dba8a8f546120268821ed1acc2a691",
       "hints": [
-        "쿠키의 내용을 확인하세요",
-        "Base64 디코딩 후 수정해보세요"
+        "user1로 로그인 후 개발자 도구에서 'session_obj' 쿠키 복사 → base64 디코딩하면 pickle 바이너리",
+        "Python으로 악성 pickle 페이로드 생성: pickle.dumps({'user':'admin','role':'admin'})",
+        "base64 인코딩 후 curl --cookie 'session_obj=페이로드' http://localhost:8008/admin"
       ],
-      "container_url": "https://owasp-a08-integrity-failures.onrender.com",
+      "container_url": "http://localhost:8008",
       "icon": "🔏",
       "tags": ["Integrity", "Cookie Manipulation", "Insecure Deserialization"]
     },
@@ -135,12 +143,13 @@
       "difficulty": "easy",
       "description": "로그가 남지 않는 취약점을 이용하여 공격 흔적을 숨기세요.",
       "points": 100,
-      "flagHash": "19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7",
+      "flagHash": "106ddbebdd8ff38c5988e238fc7f5c8cc2d6d92da47eb2eeeab96948541afa23",
       "hints": [
-        "관리자 페이지가 로깅되지 않습니다",
-        "직접 URL에 접근해보세요"
+        "숨겨진 엔드포인트를 찾아야 합니다. 일반적인 로그 관련 경로를 추측하거나",
+        "gobuster로 스캔: gobuster dir -u http://localhost:8009 -w common.txt",
+        "/logs 엔드포인트 발견 → 인증 없이 접근 가능 → 로그에서 Flag와 관리자 비밀번호 노출"
       ],
-      "container_url": "https://owasp-a09-logging-failures.onrender.com",
+      "container_url": "http://localhost:8009",
       "icon": "📝",
       "tags": ["Logging", "Monitoring", "Detection Bypass"]
     },
@@ -151,12 +160,13 @@
       "difficulty": "medium",
       "description": "에러 메시지에서 민감한 정보를 추출하세요.",
       "points": 200,
-      "flagHash": "03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4",
+      "flagHash": "5ed4ede5b2f40cb95dd736f74a8d17ef16c24a8ce0960de1ce16d36e92634335",
       "hints": [
-        "잘못된 입력으로 에러를 발생시키세요",
-        "스택 트레이스에 힌트가 있습니다"
+        "/product?id=abc 같은 잘못된 입력으로 SQL 에러 유발 → 에러 페이지에서 DB 스키마 노출",
+        "secret 컬럼 존재 확인 → UNION SELECT 공격으로 숨겨진 컬럼 조회",
+        "/product?id=1 UNION SELECT id,name,price,secret FROM products-- 로 Flag 추출"
       ],
-      "container_url": "https://owasp-a10-exception.onrender.com",
+      "container_url": "http://localhost:8010",
       "icon": "⚠️",
       "tags": ["Exception Handling", "Error Messages", "Information Disclosure"]
     }
